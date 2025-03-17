@@ -1,30 +1,47 @@
 <template>
-  <div>Counter: {{ count }}</div>
-  <v-btn @click="increment()">Increment</v-btn>
+  <v-app :class="getState">
+      <v-main>
+          <Login v-if="authentication === false"></Login>
+          <Main v-if="authentication"></Main>
+      </v-main>
+  </v-app>
 </template>
 
 <script>
+import Main from './Main.vue';
+
   export default {
     data () {
-      return {
-        count: this.$store.state.count
+      return {  
+        authentication: false,
       }
     },
 
     created() {
     },
 
-    mounted() { 
+    computed: {
+      getState() {
+            this.authentication = this.$store.getters.isUserLogged;
+            return this.authentication ? "user-logged" : "user-anonymous";
+        },
     },
 
-    computed: {
+    mounted() { 
+      const Self = this;
+        this.$store.dispatch('setLogin', function() {
+            Self.authentication = Self.$store.getters.isUserLogged;
+
+            if (!Self.authentication) {
+                Self.$router.push("/").catch((err) => err);
+            }
+            if (Self.authentication && window.location.pathname == "/") {
+                Self.$router.push("/home").catch((err) => err);
+            }
+        });
     },
 
     methods: {
-      increment() {
-        this.$store.commit('increment')
-        console.log(this.$store.state.count)
-      }
     }
   }
 </script>

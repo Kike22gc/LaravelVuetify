@@ -1,14 +1,44 @@
 <template v-slot:prepend>
-    <v-list density="compact" :elevation="3">
-        <v-list-item class="mt-4" >
-            <img src="https://randomuser.me/api/portraits/women/64.jpg">                    
-        </v-list-item>
-        <v-list-title class="mx-4">AAAA</v-list-title>
-    </v-list>
-    
-    <v-list :elevation="3">
-      <v-list-item prepend-icon="mdi-logout" title="Cerrar Sesion" @click="logout()"></v-list-item>
-    </v-list>
+    <v-navigation-drawer
+      class="deep-purple accent-4"
+      dark
+      permanent
+    >
+
+        <v-list density="compact" :elevation="3">
+            <v-list-item class="mt-4" >
+                <img src="https://randomuser.me/api/portraits/women/64.jpg">                    
+            </v-list-item>
+            <v-list-item
+                :title=$store.state.user_name
+                :subtitle=$store.state.user_mail>
+            </v-list-item>
+        </v-list>
+
+        <v-list>
+            <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+            >
+            <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+            </v-list-item>
+        </v-list>
+
+      <template v-slot:append>
+        <div class="pa-2">
+          <v-btn block @click="logout()">
+            Logout
+          </v-btn>
+        </div>
+      </template>
+    </v-navigation-drawer>
     
 </template>
    
@@ -16,18 +46,19 @@
     export default {
      data () {
       return {
-       items: [
-        { text: 'Real-Time', icon: 'mdi-clock' },
-        { text: 'Audience', icon: 'mdi-account' },
-        { text: 'Conversions', icon: 'mdi-flag' },
-       ],
+        items: [
+          { title: 'Dashboard', icon: 'mdi-view-dashboard' },
+          { title: 'Account', icon: 'mdi-account-box' },
+          { title: 'Admin', icon: 'mdi-gavel' },
+        ],
+
       }
      },
 
      methods: {
         logout: function () {
-            this.$router.push("/").catch((err) => err);
-            this.$emit('Logout')
+            this.$store.dispatch("setLogout");
+            this.$router.push("/");
         }
     },
 

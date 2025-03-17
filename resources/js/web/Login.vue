@@ -61,12 +61,16 @@ export default {
             .post("/api/user/login", credenciales)
             .then((response) => {
                 if(response.data.status == 'OK'){
-                    console.log('Login OK')
-                    this.$store.dispatch('LOGIN')
-                    console.log('Login OK 2')
-                }
+
+                    this.usuario = response.data[0];
+
+                    Self.$store.dispatch("setLogin", () => {
+                        Self.$router.push("/home").catch((err) => err);
+                    });
+                    }
             })
             .catch((error) => {
+                alert('Usuario o contraseeña incorrectos')
             });
         },
   }

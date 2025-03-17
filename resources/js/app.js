@@ -6,6 +6,7 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import store from './store/store'
 
 import App from './web/App.vue';
 import LoginPage from "./web/Login.vue"
@@ -18,6 +19,20 @@ import HomeLeft from "./Componentes/Home/HomeLeft.vue"
 import HomeCenter from "./Componentes/Home/HomeCenter.vue"
 import HomeRight from "./Componentes/Home/HomeRight.vue"
 
+axios.interceptors.response.use(
+  function (response) {
+      return response;
+  },
+  function (error) {
+      if (!!error && !!error.response && !!error.response.status && 401 === error.response.status) {
+          app.$store.dispatch("setLogout");
+          app.$router.push("/");
+      } else {
+          return Promise.reject(error);
+      }
+  }
+);
+
 const app = createApp(App);
 const vuetify = createVuetify({
   components,
@@ -26,6 +41,7 @@ const vuetify = createVuetify({
 
 app.use(RouterWeb);
 app.use(vuetify)
+app.use(store)
 
 app.component('Login', LoginPage)
 app.component('Main', MainPage)
