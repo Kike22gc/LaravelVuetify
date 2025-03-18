@@ -1,47 +1,35 @@
 <template>
-  <v-app :class="getState">
-      <v-main>
-          <Login v-if="authentication === false"></Login>
-          <Main v-if="authentication"></Main>
+    <v-layout style="height: 100vh;" class="rounded rounded-md border ">
+      
+      <Header @OpenCloseNavbar="OpenCloseNavbar"></Header>
+      <Navbar v-model="vShowNavbar"></Navbar>
+  
+      <v-main class="d-flex align-center justify-center" >
+        <v-container>
+          <router-view></router-view>       
+        </v-container>
       </v-main>
-  </v-app>
-</template>
+
+    </v-layout>
+  </template>
 
 <script>
-import Main from './Main.vue';
 
-  export default {
-    data () {
-      return {  
-        authentication: false,
-      }
+export default {
+  components: {  },
+
+  data() {
+      return {
+        vShowNavbar: false
+      };
+  },
+
+  methods: {
+    OpenCloseNavbar: function () {
+        this.vShowNavbar = !this.vShowNavbar;
     },
-
-    created() {
-    },
-
-    computed: {
-      getState() {
-            this.authentication = this.$store.getters.isUserLogged;
-            return this.authentication ? "user-logged" : "user-anonymous";
-        },
-    },
-
-    mounted() { 
-      const Self = this;
-        this.$store.dispatch('setLogin', function() {
-            Self.authentication = Self.$store.getters.isUserLogged;
-
-            if (!Self.authentication) {
-                Self.$router.push("/").catch((err) => err);
-            }
-            if (Self.authentication && window.location.pathname == "/") {
-                Self.$router.push("/home").catch((err) => err);
-            }
-        });
-    },
-
-    methods: {
-    }
   }
+  
+}
+  
 </script>

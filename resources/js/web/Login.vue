@@ -1,6 +1,6 @@
-<template>
+<template >
     <v-card class="mx-auto my-12" max-width="50%">
-        <v-toolbar color="primary" :dark="true">
+        <v-toolbar color="primary">
             <v-toolbar-title>Iniciar Sesion</v-toolbar-title>
         </v-toolbar>
         <v-card-text>

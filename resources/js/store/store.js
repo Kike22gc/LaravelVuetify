@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createStore } from 'vuex'
-import App from '../web/App.vue';
+import App from '../web/Index.vue';
 
 const store = createStore({
     state () {
@@ -13,7 +13,6 @@ const store = createStore({
     },
     mutations: {
         LOGIN: async function (state, callback) {
-            console.log('mutation')
             let response = await axios.get("/api/user/data");   
 
             if (response.data.status == 'OK') {
@@ -38,7 +37,6 @@ const store = createStore({
     },
     actions: {
         setLogin: function (context, callback) {
-            console.log('setlogin')
             context.commit('LOGIN', callback);
         },
         setLogout: function (context) {

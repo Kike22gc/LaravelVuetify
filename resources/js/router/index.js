@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-const AppComponent = () => import ('../web/App.vue')
+const AppComponent = () => import ('../web/Index.vue')
 const HomeComponent = () => import ('../Componentes/Home/Home.vue')
 
 const EmpleadosComponent = () => import ('../Componentes/Empleados/Empleados.vue');
