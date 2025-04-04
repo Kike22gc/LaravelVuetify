@@ -7,7 +7,7 @@
 
         <v-list density="compact" :elevation="3">
             <v-list-item class="mt-4" >
-                <img src="https://randomuser.me/api/portraits/women/64.jpg">                    
+                <img src="https://randomuser.me/api/portraits/men/24.jpg">                    
             </v-list-item>
             <v-list-item
                 :title=$store.state.user_name
@@ -33,8 +33,8 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn color="primary" block @click="logout()">
-            Logout
+          <v-btn color="first" block @click="logout()">
+            cerrar sesión
           </v-btn>
         </div>
       </template>

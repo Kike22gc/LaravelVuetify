@@ -1,22 +1,19 @@
 <template>
-  <v-theme-provider>
-    <v-app :class="getState">
-        <v-main>
-            <Login v-if="authentication === false"></Login>
-            <Main v-if="authentication"></Main>
-        </v-main>
-    </v-app>
-  </v-theme-provider>
+  <v-app :class="getState">
+      <v-main>
+          <Login v-if="authentication === false && show =='login'" @changeView="changeView()"></Login>
+          <Registro v-if="authentication === false && show =='registro'" @changeView="changeView()"></Registro>
+          <Main v-if="authentication"></Main>
+      </v-main>
+  </v-app>
 </template>
 
 <script>
-import Main from './App.vue';
-
-
   export default {
     data () {
       return {  
         authentication: false,
+        show: 'login',
       }
     },
 
@@ -46,6 +43,9 @@ import Main from './App.vue';
     },
 
     methods: {
+      changeView: function () {
+        this.show = this.show =='login' ? "registro" : "login" 
+      }
     }
   }
 </script>

@@ -15,10 +15,12 @@ return new class extends Migration
         Schema::create('history_projects', function (Blueprint $table) {
             $table->integer('project_id')->id();
             $table->string('project_name');
+            $table->string('project_description');
             $table->string('project_client_name');
             $table->date('project_start_date')->nullable();
             $table->date('project_target_date')->nullable();
             $table->date('project_end_date')->nullable();
+            $table->string('project_state');
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });

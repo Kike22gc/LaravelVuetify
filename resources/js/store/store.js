@@ -9,6 +9,7 @@ const store = createStore({
             user_id: null,
             user_name: null,
             user_mail: null,
+            company_id: null,
         }
     },
     mutations: {
@@ -20,6 +21,7 @@ const store = createStore({
                 state.user_id = response.data.id;
                 state.user_name = response.data.name;
                 state.user_mail = response.data.email;
+                state.company_id = response.data.company_id;
                 if (typeof callback == 'function') {
                     callback(true);
                 }
@@ -29,6 +31,7 @@ const store = createStore({
                 state.user_id = null;
                 state.user_name = null;
                 state.user_mail = null;
+                state.company_id = null;
                 if (typeof callback == 'function') {
                     callback(false);
                 }

@@ -1,20 +1,30 @@
-<template >
+<template>
     <v-card class="mx-auto my-12" max-width="50%">
-        <v-toolbar color="primary">
-            <v-toolbar-title>Iniciar Sesion</v-toolbar-title>
+        <v-toolbar color="first">
+            <v-toolbar-title class="text-center"><b>BIENVENIDO A: XXXXX</b></v-toolbar-title>
         </v-toolbar>
         <v-card-text>
             <v-form>
-              <v-text-field v-model="vEmail" prepend-icon="mdi-at" type="text" label="E-mail"></v-text-field>
-              <v-text-field v-model="vPass" prepend-icon="mdi-lock" type="password" label="Contraseña"></v-text-field>
+              <v-text-field v-model="usermail"    prepend-icon="mdi-at"   label="E-mail"></v-text-field>
+              <v-text-field v-model="userpass"    prepend-icon="mdi-lock" @click:append-inner="show1 = !show1" :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"    :type="show1 ? 'text' : 'password'" label="Contraseña"></v-text-field>
             </v-form>
+            <v-card-actions> 
+                <v-spacer/>  
+                <v-btn color="link">¿Has olvidado tu contraseña?</v-btn>
+            </v-card-actions>
+            <v-row class="ma-0">
+                <v-btn block rounded color="first" @click="login()">Iniciar Sesión</v-btn>
+            </v-row>
+            <v-row class="mt-8 mb-4">
+                <v-spacer/>
+                <v-btn rounded color="link" @click="changeView()">Crear Usuario</v-btn>
+                <v-spacer/>
+            </v-row>
         </v-card-text>
-        <v-card-actions>
-            <v-btn rounded color="primary" dark @click="signin()">Registrarse</v-btn>
-            <v-spacer/>
-            <v-btn rounded color="primary" dark @click="login()">Iniciar Sesion</v-btn>
-        </v-card-actions>
+        
+        
     </v-card>
+    
   </template>
 
 <script>
@@ -25,36 +35,19 @@ export default {
 
   data() {
       return {
-        usuario: [],
-        vEmail: 'b@b.es',
-        vPass: 'B',
+        usermail: 'a@a.es',
+        userpass: 'a',
+        show1: false
       };
   },
 
   methods: {
-    signin: function () {
-        let credenciales = {
-            email: this.vEmail,
-            password: this.vPass,
-        };
-
-        axios
-            .post("/api/user/signUp", credenciales)
-            .then((response) => {
-                alert("Usuario Creado Correctamente");
-            })
-            .catch((error) => {
-                alert("Error al crear el Usuario");
-            });
-
-    },
-
     login: function () {
         let Self = this;
         
         let credenciales = {
-            email: this.vEmail,
-            password: this.vPass,
+            email: this.usermail,
+            password: this.userpass,
         };
 
         axios
@@ -72,7 +65,10 @@ export default {
             .catch((error) => {
                 alert('Usuario o contraseeña incorrectos')
             });
-        },
+    },
+    changeView() {
+        this.$emit("changeView");
+    },
   }
 
   

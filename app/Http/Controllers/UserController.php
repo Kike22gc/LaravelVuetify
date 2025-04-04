@@ -1,34 +1,43 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-
-//Librerias Passport Necesarias
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
-use App\Models\User;
-use App\Models\Company;
-use Exception;
 use Illuminate\Support\Facades\Log;
+
+use App\Models\User;
+use App\Models\Companies;
+
+use Exception;
 
 class UserController extends BaseController
 {
-    /**
-     * Registro de usuario
-     */
+    //Registro de usuario
     public function signUp(Request $request)
     {
         $data = $request->all();
 
-        $user = User::create([
-            'name' => 'Name Subname',
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+        $company = Companies::create([
+            'company_name' => $data['company'],
+            'company_active' => 1,
+            'company_end_subscription' => date("Y-m-d 00:00:00", strtotime("+1 year +1 days"))
 
         ]);
+        
+        $companyID = Companies::where('company_name', $data['company'])->first();
+        error_log($companyID);
 
+        
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'role_id' => 2,
+            'company_id' => $companyID['company_id']
+        ]);
+        
         return response()->json([
             'message' => 'Usuario Creado Correctamente',
             'status' => 'OK',
@@ -36,11 +45,8 @@ class UserController extends BaseController
         ]);
     }
 
-    /**
-     * Inicio de sesión
-     */
+    //Inicio de sesión
     public function login(Request $request)
-
     {
         $credentials = request(['email', 'password']);
 
@@ -56,16 +62,13 @@ class UserController extends BaseController
             ], 200);
 
         } else {
-            error_log('Voy al else');
             return response()->json([
                 'status' => 'ERROR'
             ], 401);
         }
     }
 
-    /**
-     * Cierre de sesión
-     */
+    // Cierre de sesión
     public function logout(Request $request)
     {
         if (Auth::check()) {
@@ -77,9 +80,7 @@ class UserController extends BaseController
         ]);
     }
 
-    /**
-     * Obtener el objeto User como json
-     */
+    //Obtener el objeto User como json
     public function user(Request $request)
     {
         $user = $request->user();

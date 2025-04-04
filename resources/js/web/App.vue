@@ -4,11 +4,13 @@
       <Header @OpenCloseNavbar="OpenCloseNavbar"></Header>
       <Navbar v-model="vShowNavbar"></Navbar>
   
-      <v-main class="d-flex align-center justify-center" >
-        <v-container>
-          <router-view></router-view>       
-        </v-container>
-      </v-main>
+      <v-locale-provider locale="es">
+        <v-main class="d-flex align-center justify-center mt-8">
+          <v-container>
+            <router-view></router-view>       
+          </v-container>
+        </v-main>
+      </v-locale-provider>
 
     </v-layout>
   </template>

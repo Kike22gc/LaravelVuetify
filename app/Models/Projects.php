@@ -18,10 +18,18 @@ class Projects extends Authenticatable
      *
      * @var list<string>
      */
+    protected $connection = 'mysql';
+    protected $table = 'projects';
+    protected $primaryKey = 'project_id';
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'project_name',
+        'project_description',
+        'project_client_id',
+        'project_start_date',
+        'project_target_date',
+        'project_end_date',
+        'project_state',
+        'project_user_id',
     ];
 
     /**
