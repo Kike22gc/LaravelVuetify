@@ -120,7 +120,6 @@
 </template>
 
 <script>
-
 export default {
   props: ['project'],
 
@@ -170,7 +169,6 @@ export default {
   methods: {
     initialize: function() {
       this.today = this.today.getFullYear() + '-' + (this.today.getMonth() +1 ) + '-' + this.today.getDate()
-      console.log(this.today)
       this.getClientList();
       
     },
@@ -193,8 +191,9 @@ export default {
 
     getContactList: function() {
       let data = {
-        clientID: this.Proyecto_Cliente
+        clientID: this.project.Proyecto_Cliente
       }
+      console.log('getContactList', data)
       axios
         .post("/api/clients/getContactList", data)
         .then((response) => {

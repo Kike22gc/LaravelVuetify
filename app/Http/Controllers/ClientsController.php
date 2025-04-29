@@ -21,7 +21,6 @@ class ClientsController extends BaseController
     {
         $companyID = $request['companyID'];
 
-        error_log($companyID);
         $clientList = Clients::where('companies_company_id', $companyID)->orderBy('client_name', 'asc')->get();
 
         return response()->json([

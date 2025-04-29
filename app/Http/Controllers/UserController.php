@@ -27,7 +27,6 @@ class UserController extends BaseController
         ]);
         
         $companyID = Companies::where('company_name', $data['company'])->first();
-        error_log($companyID);
 
         
         $user = User::create([

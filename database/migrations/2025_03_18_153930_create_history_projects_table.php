@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\User;
+use App\Models\Clients;
+use App\Models\ClientContact;
+use App\Models\Companies;
 
 return new class extends Migration
 {
@@ -13,13 +16,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('history_projects', function (Blueprint $table) {
-            $table->integer('project_id')->id();
+            $table->increments('project_id')->id();
             $table->string('project_name');
             $table->string('project_description');
-            $table->string('project_client_name');
-            $table->date('project_start_date')->nullable();
-            $table->date('project_target_date')->nullable();
-            $table->date('project_end_date')->nullable();
+            $table->foreignIdFor(Companies::class);
+            $table->foreignIdFor(Clients::class);
+            $table->foreignIdFor(ClientContact::class);
+            $table->dateTime('project_start_date')->nullable();
+            $table->dateTime('project_target_date')->nullable();
+            $table->dateTime('project_end_date')->nullable();
+            $table->json('project_tasks');
             $table->string('project_state');
             $table->foreignIdFor(User::class);
             $table->timestamps();

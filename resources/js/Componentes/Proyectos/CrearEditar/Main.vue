@@ -31,13 +31,12 @@
       </template>
 
     </v-card>
-
-    
-
   </v-dialog>
   </template>
 
 <script>
+import axios from "axios";
+import moment from "moment";
 
 export default {
   props: ['visible', 'isNewProject', 'project'],
@@ -72,7 +71,26 @@ export default {
     },
 
     create: function() {
-      console.log(this.project)
+      this.project.Proyecto_Fecha_Inicio = moment(this.project.Proyecto_Fecha_Inicio).utc().format('YYYY/MM/DD 00:00:00')
+      this.project.Proyecto_Fecha_Objetivo = moment(this.project.Proyecto_Fecha_Objetivo).utc().format('YYYY/MM/DD 00:00:00')
+      this.project.Proyecto_Fecha_Fin = moment(this.project.Proyecto_Fecha_Fin).utc().format('YYYY/MM/DD 00:00:00')
+
+      let data = {
+        proyect: this.project,
+        companyID: this.$store.state.company_id,
+        userID: this.$store.state.user_id,
+      }
+
+      axios
+            .post("/api/projects/createProject", data)
+            .then((response) => {
+                if(response.data.status == 'OK'){
+
+                }
+            })
+            .catch((error) => {
+                alert('Error al crear el proyecto')
+            });
     }
   },
 }

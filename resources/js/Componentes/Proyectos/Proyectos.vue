@@ -56,7 +56,7 @@ import APIProject from "../../Interface/Project";
          isLoadingProjects: false,
 
          headers: [
-         { key: 'name', title: 'Dessert (100g serving)', sortable: true, align: 'start', },
+         { key: 'project_name', title: 'Proyecto', sortable: true, align: 'start', },
          { key: 'calories', title: 'Calories' },
          { key: 'fat', title: 'Fat (g)' },
          { key: 'carbs', title: 'Carbs (g)' },
@@ -65,14 +65,6 @@ import APIProject from "../../Interface/Project";
         ],
         
         projects: [
-         { name: 'Frozen Yogurt', calories: 159, fat: 6, carbs: 24, protein: 4, iron: 1, },
-         { name: 'Frozen Yogurt', calories: 159, fat: 6, carbs: 24, protein: 4, iron: 1, },
-         { name: 'Frozen Yogurt', calories: 159, fat: 6, carbs: 24, protein: 4, iron: 1, },
-         { name: 'Frozen Yogurt', calories: 159, fat: 6, carbs: 24, protein: 4, iron: 1, },
-         { name: 'Frozen Yogurt', calories: 159, fat: 6, carbs: 24, protein: 4, iron: 1, },
-         { name: 'Frozen Yogurt', calories: 159, fat: 6, carbs: 24, protein: 4, iron: 1, },
-         { name: 'Frozen Yogurt', calories: 159, fat: 6, carbs: 24, protein: 4, iron: 1, },
-         { name: 'Frozen Yogurt', calories: 159, fat: 6, carbs: 24, protein: 4, iron: 1, },
         ],
 
         ShowProyecto: false,
@@ -81,7 +73,32 @@ import APIProject from "../../Interface/Project";
       }
      },
 
+     created() {
+      this.initialize();
+     }, 
+
      methods: {
+      initialize: function() {
+        this.getProjectList();
+      },
+
+      getProjectList: function() {
+        let data = {
+        companyID: this.$store.state.company_id
+      }
+      console.log(data);
+
+      axios
+        .post("/api/projects/getList", data)
+        .then((response) => {
+          console.log(response.data.clientProjectList)
+          this.projects = response.data.clientProjectList
+        })
+        .catch((error) => {
+            alert('Error al cargar los proyectos de la compañia')
+        });
+      },
+
       NewProject: function() {
         this.ShowProyecto = true,
         this.isNewProject = true,

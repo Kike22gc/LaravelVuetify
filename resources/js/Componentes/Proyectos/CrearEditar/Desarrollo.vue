@@ -64,7 +64,6 @@ export default {
   methods: {
     addTask: function() {
       let task = {
-        Proyecto_Tarea_ID: null,
         Proyecto_Tarea_Titulo: this.newTaskTitle,
         Proyecto_Tarea_Descripcion: this.newTaskSubtitle, 
         Proyecto_Tarea_Activo: false

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProjectController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,9 @@ Route::post('/api/user/logout', [UserController::class, 'logout']);
 Route::get('/api/user/data', [UserController::class, 'user']);
 
 // API Client
-
 Route::post('/api/clients/getList', [ClientsController::class, 'getList']);
 Route::post('/api/clients/getContactList', [ClientsController::class, 'getContactList']);
+
+// API Projects
+Route::post('/api/projects/createProject', [ProjectController::class, 'createProject']);
+Route::post('/api/projects/getList', [ProjectController::class, 'getList']);

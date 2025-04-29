@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class Projects extends Authenticatable
+class ProjectsDraft extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
@@ -19,7 +19,7 @@ class Projects extends Authenticatable
      * @var list<string>
      */
     protected $connection = 'mysql';
-    protected $table = 'projects';
+    protected $table = 'projects_draft';
     protected $primaryKey = 'project_id';
     protected $fillable = [
         'project_name',

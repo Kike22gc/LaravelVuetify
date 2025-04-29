@@ -20,19 +20,6 @@ export default class APIProject {
         Proyecto_Fecha_Fin: null,
         Proyecto_Usuario_Asignado: null,
         Proyecto_Estado: 'Borrador',
-        Proyecto_Tareas: [
-            {
-                Proyecto_Tarea_ID: 1,
-                Proyecto_Tarea_Titulo: 'Tarea1',
-                Proyecto_Tarea_Descripcion: 'Descripcion1',
-                Proyecto_Tarea_Activo: false,
-            },
-            {
-                Proyecto_Tarea_ID: 2,
-                Proyecto_Tarea_Titulo: 'Tarea2',
-                Proyecto_Tarea_Descripcion: 'Descripcion2',
-                Proyecto_Tarea_Activo: true,
-            },
-        ],
+        Proyecto_Tareas: [],
     }
 }
