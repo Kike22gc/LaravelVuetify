@@ -24,6 +24,7 @@ class ProjectsDraft extends Authenticatable
     protected $fillable = [
         'project_name',
         'project_description',
+        'companies_company_id',
         'clients_client_id',
         'client_contact_client_contact_id',
         'project_start_date',

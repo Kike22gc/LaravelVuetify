@@ -4,7 +4,7 @@
       <Header @OpenCloseNavbar="OpenCloseNavbar"></Header>
       <Navbar v-model="vShowNavbar"></Navbar>
   
-      <v-locale-provider locale="es">
+      <v-locale-provider>
         <v-main class="d-flex align-center justify-center mt-8">
           <v-container>
             <router-view></router-view>       

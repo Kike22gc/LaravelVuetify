@@ -22,9 +22,9 @@ return new class extends Migration
             $table->foreignIdFor(Companies::class);
             $table->foreignIdFor(Clients::class);
             $table->foreignIdFor(ClientContact::class);
-            $table->dateTime('project_start_date')->nullable();
-            $table->dateTime('project_target_date')->nullable();
-            $table->dateTime('project_end_date')->nullable();
+            $table->dateTime('project_start_date', precision:0)->nullable();
+            $table->dateTime('project_target_date', precision:0)->nullable();
+            $table->dateTime('project_end_date', precision:0)->nullable();
             $table->json('project_tasks');
             $table->string('project_state');
             $table->foreignIdFor(User::class);

@@ -4,10 +4,11 @@ import RouterWeb from './router/index'
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
+import { es } from 'vuetify/locale'
 import * as directives from 'vuetify/directives'
 import store from './store/store'
 import { VDateInput } from 'vuetify/labs/VDateInput'
+import moment from 'moment'
 
 import App from './web/Index.vue';
 
@@ -44,6 +45,11 @@ axios.interceptors.response.use(
 
 const app = createApp(App);
 const vuetify = createVuetify({
+  locale: {
+    locale: 'es',
+    fallback: 'es',
+    messages: { es },
+  },
   components: {
     VDateInput,
   },
@@ -68,7 +74,8 @@ const vuetify = createVuetify({
 
 app.use(RouterWeb);
 app.use(vuetify);
-app.use(store)
+app.use(store);
+app.use(moment)
 
 app.component('Login', LoginPage)
 app.component('Registro', RegistroPage)

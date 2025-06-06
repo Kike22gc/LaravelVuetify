@@ -27,9 +27,9 @@
 
     <v-list lines="two" density="compact">
       <v-list-item
-        v-for="item in project.Proyecto_Tareas"
+        v-for="item in project.project_tasks"
         :active="item.Proyecto_Tarea_Activo"
-         active-color="green"
+         base-color="green"
         :key="item.Proyecto_Tarea_ID"
         :subtitle="item.Proyecto_Tarea_Descripcion"
         :title="item.Proyecto_Tarea_Titulo"
@@ -68,7 +68,7 @@ export default {
         Proyecto_Tarea_Descripcion: this.newTaskSubtitle, 
         Proyecto_Tarea_Activo: false
       }
-      this.project.Proyecto_Tareas.push(task)
+      this.project.project_tasks.push(task)
       this.newTaskTitle = null
       this.newTaskSubtitle = null
     }

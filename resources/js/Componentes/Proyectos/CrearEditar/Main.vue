@@ -26,7 +26,7 @@
       </v-card-text>
 
       <template v-slot:actions>
-        <v-btn color="red" variant="outlined">CANCELAR</v-btn>
+        <v-btn color="red" variant="outlined"   @click="showDialog=false">CANCELAR</v-btn>
         <v-btn color="first" variant="outlined" @click="create()">GUARDAR</v-btn>
       </template>
 
@@ -36,7 +36,7 @@
 
 <script>
 import axios from "axios";
-import moment from "moment";
+import moment from "moment"
 
 export default {
   props: ['visible', 'isNewProject', 'project'],
@@ -67,13 +67,14 @@ export default {
   
   methods: {
     initialize: function() {
-      this.title = this.isNewProject ? 'Nuevo Proyecto' : 'El proyecto ya existe'
+      this.title = this.isNewProject ? 'Nuevo Proyecto' : this.project.project_name
     },
 
     create: function() {
-      this.project.Proyecto_Fecha_Inicio = moment(this.project.Proyecto_Fecha_Inicio).utc().format('YYYY/MM/DD 00:00:00')
-      this.project.Proyecto_Fecha_Objetivo = moment(this.project.Proyecto_Fecha_Objetivo).utc().format('YYYY/MM/DD 00:00:00')
-      this.project.Proyecto_Fecha_Fin = moment(this.project.Proyecto_Fecha_Fin).utc().format('YYYY/MM/DD 00:00:00')
+
+      this.project.project_start_date = moment(this.project.project_start_date).format('YYYY/MM/DD 00:00:00')
+      this.project.project_target_date = moment(this.project.project_target_date).format('YYYY/MM/DD 00:00:00')
+      this.project.project_end_date = moment(this.project.project_end_date).format('YYYY/MM/DD 00:00:00')
 
       let data = {
         proyect: this.project,
@@ -85,7 +86,7 @@ export default {
             .post("/api/projects/createProject", data)
             .then((response) => {
                 if(response.data.status == 'OK'){
-
+                  this.$emit('ok')
                 }
             })
             .catch((error) => {

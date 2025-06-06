@@ -3,13 +3,13 @@
       autofocus
       counter="60"
       maxlength="60"
-      v-model="project.Proyecto_Nombre"
+      v-model="project.project_name"
       label="Nombre del Proyecto (*)"
       hint="Máximo 60 caracteres"
   >
   </v-text-field>
 
-  <v-textarea v-model="project.Proyecto_Descripcion" label="Descripcion"></v-textarea>
+  <v-textarea v-model="project.project_description" label="Descripcion"></v-textarea>
 
   <v-row>
     <v-col>
@@ -39,7 +39,7 @@
         :items="clientList"
         item-title='client_name'
         item-value='client_id'
-        v-model="project.Proyecto_Cliente"
+        v-model="project.clients_client_id"
         label="Cliente"
         required>
       </v-select>
@@ -70,7 +70,7 @@
         :items="contactList"
         item-title='client_contact_name'
         item-value='client_contact_id'
-        v-model="project.Proyecto_Contacto"
+        v-model="project.client_contact_client_contact_id"
         label="Persona Contacto"
         required>
       </v-select>
@@ -81,38 +81,30 @@
     <v-row>
       <v-col>
         <v-date-input 
-          v-model="project.Proyecto_Fecha_Inicio"
+          v-model="project.project_start_date"
           prepend-icon="" 
           prepend-inner-icon="$calendar" 
           label="Fecha Estimada Inicio Proyecto"
-          cancel-text="Cancelar"
-          ok-text="Confirmar"
+          :display-format="format"
           :min="today"
-          :max="project.Proyecto_Fecha_Fin"
-          first-day-of-week="1">
+          :max="project.Proyecto_Fecha_Fin">
         </v-date-input>
       </v-col>
       <v-col>
         <v-date-input 
-          v-model="project.Proyecto_Fecha_Objetivo"
+          v-model="project.project_target_date"
           prepend-icon="" 
           prepend-inner-icon="$calendar" 
           label="Fecha Estimada Objetivo"
-          cancel-text="Cancelar"
-          ok-text="Confirmar"
-          :min="project.Proyecto_Fecha_Inicio"
-          first-day-of-week="1">
+          :min="project.project_start_date">
         </v-date-input>
       </v-col><v-col>
         <v-date-input 
-          v-model="project.Proyecto_Fecha_Fin"
+          v-model="project.project_end_date"
           prepend-icon="" 
           prepend-inner-icon="$calendar" 
           label="Fecha Estimada Fin Proyecto"
-          cancel-text="Cancelar"
-          ok-text="Confirmar"
-          :min="project.Proyecto_Fecha_Inicio"
-          first-day-of-week="1">
+          :min="project.project_start_date">
         </v-date-input>
       </v-col>
     </v-row>
@@ -142,7 +134,6 @@ export default {
 
   watch: {
     isNewClient() {
-      this.project.Proyecto_Cliente = null
       this.project.Proyecto_NuevoContacto.Contacto_Nombre = null
       this.project.Proyecto_NuevoContacto.Contacto_Email = null
       this.project.Proyecto_NuevoContacto.Contacto_Telefono = null
@@ -158,8 +149,9 @@ export default {
       immediate: true,
       deep: true,
       handler(newValue, oldValue) {
-        if(newValue.Proyecto_Cliente != this.clientSelected && !this.isNewClient) {
-          this.clientSelected = newValue.Proyecto_Cliente
+        if(newValue.clients_client_id != this.clientSelected && !this.isNewClient) {
+          this.clientSelected = newValue.clients_client_id;
+          if (oldValue !== undefined) this.project.client_contact_client_contact_id = null;
           this.getContactList();
         }
       }
@@ -168,8 +160,8 @@ export default {
 
   methods: {
     initialize: function() {
-      this.today = this.today.getFullYear() + '-' + (this.today.getMonth() +1 ) + '-' + this.today.getDate()
       this.getClientList();
+      this.getContactList();
       
     },
 
@@ -181,7 +173,6 @@ export default {
       axios
         .post("/api/clients/getList", data)
         .then((response) => {
-          console.log(response.data.clientList)
           this.clientList = response.data.clientList
         })
         .catch((error) => {
@@ -191,13 +182,11 @@ export default {
 
     getContactList: function() {
       let data = {
-        clientID: this.project.Proyecto_Cliente
+        clientID: this.project.clients_client_id
       }
-      console.log('getContactList', data)
       axios
         .post("/api/clients/getContactList", data)
         .then((response) => {
-          console.log(response.data.clientContactList)
           this.contactList = response.data.clientContactList
         })
         .catch((error) => {
